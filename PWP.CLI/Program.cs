@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using PWP.CLI.Data;
 
 namespace PWP.CLI
 {
@@ -13,7 +12,8 @@ namespace PWP.CLI
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
-            builder.Services.AddSingleton<WeatherForecastService>();
+
+
 
             var app = builder.Build();
 
