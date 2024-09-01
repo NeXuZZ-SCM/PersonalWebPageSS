@@ -4,6 +4,7 @@
 @using Newtonsoft.Json
 @inject ISnackbar Snackbar
 @inject Microsoft.Extensions.Configuration.IConfiguration config;
+@inject IConfiguration Configuration
 
 
 
@@ -111,9 +112,9 @@
         var stringContent = new StringContent(JSONObject, Encoding.UTF8, "application/json");
 
         //HttpResponseMessage response = await client.GetAsync("http://localhost:44321/api/mail"); //Para probar en local
-
         //string apiURL = config.GetSection("apiinfo")["apiurl"].ToString();
-        HttpResponseMessage response = await client.PostAsync("https://localhost:44321/api/mail", stringContent);
+
+        HttpResponseMessage response = await client.PostAsync(Configuration["MailUrlApi"], stringContent);
         if (response.IsSuccessStatusCode)
         {
             string respuesta = await response.Content.ReadAsStringAsync();
