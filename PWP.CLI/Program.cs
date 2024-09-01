@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using MudBlazor.Services;
+using PWPCli.Shared;
 
 namespace PWP.CLI
 {
@@ -13,6 +13,11 @@ namespace PWP.CLI
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
 
+
+
+            builder.Services.AddScoped<IScrollInfoService, ScrollInfoService>();
+
+            builder.Services.AddMudServices();
 
 
             var app = builder.Build();

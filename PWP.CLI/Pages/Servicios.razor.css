@@ -1,0 +1,192 @@
+﻿img {
+    height: 100px;
+    filter: grayscale(100%);
+}
+    img:hover {
+        filter: grayscale(0%);
+    }
+
+#Ordenador {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+/*.blocktech2 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: column wrap;
+    flex-flow: column wrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100%;
+}
+
+
+.pro1h {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.pro1f {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.pro11,
+.pro12,
+.pro13,
+.pro14,
+.pro15,
+.pro16,
+.pro17,
+.pro18,
+.pro19,
+.pro20,
+.pro21,
+.pro22,
+.pro23,
+.pro24,
+.pro25 {
+    width: 150px;
+    height: 150px;
+    margin-right: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.pro11 {
+    background-image: url(images/html.png);
+    background-size: 140px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.pro12 {
+    background-image: url(images/css.png);
+    background-size: 100px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.pro13 {
+    background-image: url(images/javascript.png);
+    background-size: 150px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.pro14 {
+    background-image: url(images/jquery.jpg);
+    background-size: 150px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.pro15 {
+    background-image: url(images/fundationzurb.PNG);
+    background-size: 160px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.pro16 {
+    background-image: url(images/Bootstrap-Logo.png);
+    background-size: 150px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.pro17 {
+    background-image: url(images/ruby.jpg);
+    background-size: 120px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.pro18 {
+    background-image: url(images/python.jpg);
+    background-size: 110px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.pro19 {
+    background-image: url(images/csharp.jpg);
+    background-size: 110px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.pro20 {
+    background-image: url(images/netframe.png);
+    background-size: 110px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.pro21 {
+    background-image: url(images/sass.png);
+    background-size: 110px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.pro22 {
+    background-image: url(images/java-logo.png);
+    background-size: 150px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+    .pro11:hover, .pro12:hover, .pro13:hover, .pro14:hover, .pro15:hover, .pro16:hover, .pro17:hover, .pro18:hover, .pro19:hover, .pro20:hover, .pro21:hover, .pro22:hover, .pro23:hover, .pro24:hover, .pro25:hover {
+        -webkit-filter: grayscale(0%);
+        filter: grayscale(0%);
+    }
+
+.pro23 {
+    background-image: url(images/WordPress.png);
+    background-size: 140px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.pro24 {
+    background-image: url(images/sqlserver.jpg);
+    background-size: 120px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.pro25 {
+    background-image: url(images/php.jpg);
+    background-size: 130px;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}*/

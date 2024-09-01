@@ -1,0 +1,50 @@
+﻿@using BlazorTypewriter
+
+
+<div class="photo portada" data-stellar-background-ratio="0.5">
+    <article>
+        <MudTooltip Arrow="true" Placement="Placement.Right" Color="Color.Dark">
+            <ChildContent>
+                <p class="avatar"></p>
+            </ChildContent>
+            <TooltipContent>
+                <MudText Typo="Typo.h6" Style="@($"color:{Theme.Palette.SuccessLighten}")">Hola Mundo!</MudText>
+                <MudIcon Icon="@Icons.Material.Filled.Code" Style="@($"color:{Theme.Palette.SuccessLighten}")" />
+            </TooltipContent>
+        </MudTooltip>
+
+
+        <i class="orangeline"> </i>
+        <MudText Typo="Typo.h3" Style="@($"color:{Colors.Shades.White};font-family: 'Poiret One', cursive;")">Cristian Martin Sguazzin</MudText>
+        <div style="color:white;font-size:26px;">
+            <Typewriter Builder="@typewriter" />
+        </div>
+        <a data-scroll class="bajador js-trigger" href="#SEA"></a>
+
+        <AnchorLink href="#TimeLine"><MudIcon onmouseover='this.style.color="#ffa500"' onmouseout='this.style.color="white"' Icon="@Icons.Material.Filled.ArrowDropDownCircle" Size="Size.Large" Style="@($"color: {Colors.Shades.White}; transition: 1s;")"></MudIcon></AnchorLink>
+        <MudScrollToTop>
+            <MudFab Color="Color.Tertiary" StartIcon="@Icons.Material.Filled.ArrowCircleUp" />
+        </MudScrollToTop>
+        <div id="TimeLine"></div>
+
+    </article>
+
+</div>
+
+
+
+
+
+@code {
+
+    private MudTheme Theme = new MudTheme();
+
+    TypewriterBuilder typewriter = new TypewriterBuilder(defaultCharacterPause: 6)
+                                            .TypeString("Licenciado en informática", 60)
+                                            .Pause(1500)
+                                            .DeleteAll(30)
+                                            .TypeString("FullStack .NET", 50)
+                                            .Pause(1500)
+                                            .DeleteAll(30)
+                                            .Loop();
+}

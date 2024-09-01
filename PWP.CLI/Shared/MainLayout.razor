@@ -1,12 +1,147 @@
-﻿@inherits LayoutComponentBase
+﻿@using PWPCli.Shared
+@inherits LayoutComponentBase
 
-<PageTitle>PWP.CLI</PageTitle>
+@inject IScrollInfoService scrollInfoService
 
-<div class="page">
 
-    <main>
-        <article class="content px-4">
+<PageTitle>Lic. Cristian Sguazzin</PageTitle>
+
+<MudThemeProvider Theme="_theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+
+
+
+@*#region Test zone layout*@
+<MudLayout>
+
+    @*Inicio APP BAR*@
+    <MudAppBar Elevation="0" Style="@($"background-color: {ColorAppBar};position:fixed;")">
+        @* Color="@ColorAppBar" *@
+        <MudHidden Breakpoint="Breakpoint.MdAndUp">
+            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.Xs">
+            <MudText Typo="Typo.h6" Class="ml-4" Style="@($"color:{Colors.Shades.White};font-family: 'Poiret One', cursive;")"><b>>_ CMS</b></MudText>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+            <MudText Typo="Typo.subtitle2" Style="@($"color:{Colors.Shades.White};")">>_CMS</MudText>
+        </MudHidden>
+        <MudSpacer />
+        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+            <MudButton Style="@($"color:{Colors.Shades.White};padding:0px;")"><AnchorLink onmouseover='this.style.backgroundColor="#ffffff1c"' onmouseout='this.style.backgroundColor="transparent"' class="links" href="#TimeLine" style="display:inline-flex; color:white; padding: 10px 10px 10px 10px; transition: 1s;"><MudIcon Icon="@Icons.Material.Filled.Home" Style="margin-right:10px;"></MudIcon><MudText Style="@($"color:{Colors.Shades.White};")">Inicio</MudText></AnchorLink></MudButton>
+            <MudButton Style="@($"color:{Colors.Shades.White};padding:0px;")"><AnchorLink onmouseover='this.style.backgroundColor="#ffffff1c"' onmouseout='this.style.backgroundColor="transparent"' class="links" href="#Skill" style="display:inline-flex; color:white; padding: 10px 10px 10px 10px; transition: 1s;"><MudIcon Icon="@Icons.Material.Filled.Memory" Style="margin-right:10px;"></MudIcon><MudText Style="@($"color:{Colors.Shades.White};")">Skill</MudText></AnchorLink></MudButton>@*StartIcon="@Icons.Material.Filled.Memory" *@
+            <MudButton Style="@($"color:{Colors.Shades.White};padding:0px;")"><AnchorLink onmouseover='this.style.backgroundColor="#ffffff1c"' onmouseout='this.style.backgroundColor="transparent"' class="links" href="/Data/CV.pdf" download="CristianSguazzinCV.pdf" style="display:inline-flex; color:white; padding: 10px 10px 10px 10px; transition: 1s;"><MudIcon Icon="@Icons.Custom.FileFormats.FilePdf" Style="margin-right:10px;"></MudIcon><MudText Style="@($"color:{Colors.Shades.White};")">CV</MudText></AnchorLink></MudButton>@*StartIcon="@Icons.Material.Filled.Memory" *@
+            <MudButton Style="@($"color:{Colors.Shades.White};padding:0px;")"><AnchorLink onmouseover='this.style.backgroundColor="#ffffff1c"' onmouseout='this.style.backgroundColor="transparent"' class="links" href="#Services" style="display:inline-flex; color:white; padding: 10px 10px 10px 10px; transition: 1s;"><MudIcon Icon="@Icons.Material.Filled.Code" Style="margin-right:10px;"></MudIcon><MudText Style="@($"color:{Colors.Shades.White};")">Servicios</MudText></AnchorLink></MudButton>
+            <MudButton Style="@($"color:{Colors.Shades.White};padding:0px;")"><AnchorLink onmouseover='this.style.backgroundColor="#ffffff1c"' onmouseout='this.style.backgroundColor="transparent"' class="links" href="#Services" style="display:inline-flex; color:white; padding: 10px 10px 10px 10px;  transition: 1s;"><MudIcon Icon="@Icons.Material.Filled.Call" Style="margin-right:10px;"></MudIcon><MudText Style="@($"color:{Colors.Shades.White};")">Contacto</MudText></AnchorLink></MudButton>@*ContenidoContacto*@
+        </MudHidden>
+        <MudSpacer />
+
+        <MudTooltip Text="Proximamente! :) " Arrow="true" Placement="Placement.Left">
+            <MudIconButton Icon="@IconoColorTheme" Style="color:white;"></MudIconButton> @*OnClick="ChangeColor" Disabled="true"*@
+        </MudTooltip>
+
+    </MudAppBar>
+    @*FIN APP BAR*@
+
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="25" ClipMode="DrawerClipMode.Always" Style="width:200px;">
+        <NavMenu />
+    </MudDrawer>
+
+    <MudMainContent Style="padding:0px;">
+        <MudContainer MaxWidth="MaxWidth.False" Style="padding:0px;">
             @Body
-        </article>
-    </main>
-</div>
+        </MudContainer>
+    </MudMainContent>
+
+    <Footer />
+
+</MudLayout>
+
+@code {
+
+
+    private MudBlazorAdminDashboard _theme = new();
+
+    public bool _drawerOpen = false;
+    public bool Ligth = true;
+    public string IconoColorTheme = Icons.Material.Outlined.ModeNight;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+    void ChangeColor()
+    {
+
+        if (Ligth)
+        {
+            _theme.Palette = new PaletteDark()
+                {
+
+                    Primary = Colors.Shades.Black, //Colors.Red.Darken1,
+                    Secondary = Colors.Shades.Black,
+                    Background = Colors.Shades.Black, //"#1A1A27",
+                    AppbarBackground = Colors.Shades.Black,
+                    DrawerBackground = Colors.Shades.Black, //"#FFF", //"#151521", //
+                    DrawerText = Colors.Shades.Black,
+                    Success = Colors.Shades.Black,
+                    TextPrimary = Colors.Shades.Black,
+
+                };
+            IconoColorTheme = Icons.Material.Outlined.LightMode;
+            Ligth = false;
+        }
+        else
+        {
+            _theme.Palette = new PaletteLight()
+                {
+                    Primary = Colors.Blue.Darken1,
+                    Secondary = Colors.DeepPurple.Accent2,
+                    Background = Colors.Grey.Lighten5,
+                    AppbarBackground = Colors.Blue.Darken1,
+                    DrawerBackground = "#FFF",
+                    DrawerText = "rgba(0,0,0, 0.7)",
+                    Success = "#06d79c"
+                };
+            IconoColorTheme = Icons.Material.Outlined.ModeNight;
+            Ligth = true;
+        }
+
+    }
+
+    protected override void OnInitialized()
+    {
+        scrollInfoService.OnScroll += OnScroll;
+        StateHasChanged();
+    }
+
+    string ColorAppBar = Colors.Shades.Transparent; //Color usado para dark theme
+
+    private void OnScroll(object sender, int? yValue) // funcion dark theme
+    {
+        if (yValue.HasValue && yValue is not 0)
+        {
+            ColorAppBar = Colors.Shades.Black;
+            StateHasChanged();
+        }
+        else
+        {
+            ColorAppBar = Colors.Shades.Transparent;
+            StateHasChanged();
+        }
+
+    }
+    public void Dispose()
+    {
+        scrollInfoService.OnScroll -= OnScroll;
+    }
+
+    private List<BreadcrumbItem> _items = new List<BreadcrumbItem>
+    {
+    new BreadcrumbItem("Personal", href: "#"),
+    new BreadcrumbItem("Dashboard", href: "#"),
+    };
+}
+@*#endregion*@

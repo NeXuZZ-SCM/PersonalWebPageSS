@@ -1,0 +1,127 @@
+﻿@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@using System.Text
+@using Newtonsoft.Json
+@inject ISnackbar Snackbar
+@inject Microsoft.Extensions.Configuration.IConfiguration config;
+
+
+
+
+<MudText Typo="Typo.h4" Style="margin-top:100px;" Class="d-flex justify-center">¿Querés escribirme?</MudText>
+<br />
+
+<MudGrid Class="d-flex justify-center" Style="width:100%;">
+    <MudItem xs="11" sm="5">
+        <MudPaper Class="pa-4">
+            <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+                    <MudTextField T="string" Label="Nombre" Required="true" @bind-Text="@nombre" Immediate="true" RequiredError="Nombre es requerido!"/>
+                    <MudTextField T="string" Label="Email" Required="true" @bind-Text="@email" Immediate="true" RequiredError="Email es requerido!"
+                                  Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})"/>
+                    <MudTextField T="string" Label="Mensaje" Required="true" @bind-Text="@mensaje" Immediate="true" inmRequiredError="Mensaje es requerido!" Lines="4"/>
+
+                    <div class="d-flex">
+                        <MudRadioGroup T="string" Required="true" RequiredError="Tipo de correo es requerido" @bind-SelectedOption="@SelectedOption">
+                            <MudRadio Option="@("Personal")">Personal</MudRadio>
+                            <MudRadio Option="@("Empresa")">Empresa</MudRadio>
+                        </MudRadioGroup>
+                    </div>
+                    <div class="d-flex align-center justify-space-between mt-6">
+                        <MudCheckBox T="bool" Required="true" RequiredError="You must agree" Class="ml-n2" Label="Soy un Humano"/>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" Class="ml-auto" OnClick="@(()=>EnviarCorreo())">Enviar correo</MudButton>
+                    </div>
+            </MudForm>   
+        </MudPaper>
+        <MudPaper Class="pa-4 mt-5">
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" OnClick="@(()=>form.ResetAsync())" Class="mx-2">Limpiar</MudButton>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="11" sm="4">
+        <MudPaper Class="pa-4 mud-height-full">
+            @*<MudText Typo="Typo.subtitle2">@($"Errors ({errors.Length})")</MudText>
+                @foreach (var error in errors)
+                {
+                    <MudText Color="@Color.Error">@error</MudText>
+                }*@
+
+
+                <MudText><b>De:</b> @email (@nombre) </MudText>
+                <MudText><b>Asunto:</b>(@SelectedOption) Me interesa tu perfil</MudText>
+                <MudText><b>Cuerpo de mensaje:</b></MudText>
+                <MudText>@mensaje</MudText>
+
+
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+
+@code {
+    bool success;
+    string[] errors = { };
+    MudTextField<string> pwField1;
+    MudForm form;
+
+    public string nombre { get; set; }
+    public string email { get; set; }
+    public string mensaje { get; set; }
+    public string SelectedOption { get; set; }
+
+    public bool isSended { get; set; } = false;
+
+
+    private IEnumerable<string> PasswordStrength(string pw)
+    {
+        if (string.IsNullOrWhiteSpace(pw))
+        {
+            yield return "Password is required!";
+            yield break;
+        }
+        if (pw.Length < 8)
+            yield return "Password must be at least of length 8";
+        if (!Regex.IsMatch(pw, @"[A-Z]"))
+            yield return "Password must contain at least one capital letter";
+        if (!Regex.IsMatch(pw, @"[a-z]"))
+            yield return "Password must contain at least one lowercase letter";
+        if (!Regex.IsMatch(pw, @"[0-9]"))
+            yield return "Password must contain at least one digit";
+    }
+
+    private string PasswordMatch(string arg)
+    {
+        if (pwField1.Value != arg)
+            return "Passwords don't match";
+        return null;
+    }
+
+    private async Task<string> EnviarCorreo()
+    {
+        HttpClient client = new HttpClient();
+
+        var objetoAEnviar = new
+        {
+            Nombre = nombre,
+            Email = email,
+            Mensaje = mensaje,
+            TipoDeContacto = SelectedOption,
+        };
+        var JSONObject = JsonConvert.SerializeObject(objetoAEnviar);
+
+
+        var stringContent = new StringContent(JSONObject, Encoding.UTF8, "application/json");
+
+        //HttpResponseMessage response = await client.GetAsync("http://localhost:44321/api/mail"); //Para probar en local
+
+        //string apiURL = config.GetSection("apiinfo")["apiurl"].ToString();
+        HttpResponseMessage response = await client.PostAsync("https://localhost:44321/api/mail", stringContent);
+        if (response.IsSuccessStatusCode)
+        {
+            string respuesta = await response.Content.ReadAsStringAsync();
+        }
+        await form.ResetAsync();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomCenter;
+        Snackbar.Add("El correo fue enviado", Severity.Success);
+        return null;
+    }
+
+}

@@ -1,0 +1,12 @@
+﻿.photo {
+    background-attachment: fixed;
+    background-position: 50% 0;
+    background-repeat: no-repeat;
+    height: 100vh;
+    position: relative;
+}
+
+.create {
+    background-image: url('/images/create.jpg');
+    height: 200px;
+}

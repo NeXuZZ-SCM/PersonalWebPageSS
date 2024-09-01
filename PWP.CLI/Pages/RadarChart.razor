@@ -1,0 +1,67 @@
+﻿@using ChartJs.Blazor.RadarChart
+
+<div style="display: flex; justify-content: center; height: 600px; background-color:white; flex-direction: column; align-items:center;">
+<MudText Typo="Typo.h4" Style="margin-top:100px;">Radar Skills</MudText>
+    <Chart Config="_configRadarChart"></Chart>
+    <div id="Services"></div>
+</div>
+
+@code {
+    private RadarConfig _configRadarChart;
+
+    protected override void OnInitialized()
+    {
+        ConfigurarRadarChart();
+    }
+    private void ConfigurarRadarChart()
+    {
+        _configRadarChart = new RadarConfig();
+
+        _configRadarChart.Options = new RadarOptions
+            {
+                Responsive = true,
+
+                //Title = new OptionsTitle
+                //{
+                //    Display = true,
+                //    Text = "Radar Skills",
+                //    FontSize = 24,
+
+                //},
+                Scale = new LinearRadialAxis()
+                {
+                    Ticks = new LinearRadialTicks
+                    {
+                        Min = 0,
+                        Max = 100,
+                        FontSize = 12,
+                    },
+                    PointLabels = new PointLabels
+                    {
+                        FontSize = 18,
+                        FontColor = ColorUtil.ColorHexString(0, 130, 255),
+                    }
+
+                },
+                MaintainAspectRatio = false,
+
+            };
+        _configRadarChart.Data.Labels.Add("C# (C.Sharp)");
+        _configRadarChart.Data.Labels.Add(".NET");
+        _configRadarChart.Data.Labels.Add("JavaScript");
+        _configRadarChart.Data.Labels.Add("SQL Server");
+        _configRadarChart.Data.Labels.Add("React JS");
+        _configRadarChart.Data.Labels.Add("HTML");
+        _configRadarChart.Data.Labels.Add("CSS");
+
+
+        RadarDataset<int> dataset = new RadarDataset<int>(new[] { 90, 77, 70, 72, 60, 100, 73 });
+        dataset.Label = "Skills";
+
+
+        dataset.BackgroundColor = ColorUtil.ColorString(0, 130, 255, 0.4);
+
+        _configRadarChart.Data.Datasets.Add(dataset);
+
+    }
+}
