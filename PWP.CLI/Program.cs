@@ -36,8 +36,16 @@ namespace PWP.CLI
 
             app.UseRouting();
 
+            //sección de redirección a página 404
+            app.UseStatusCodePages(async context => {
+                if (context.HttpContext.Response.StatusCode == 404)
+                {
+                    context.HttpContext.Response.Redirect("/404");
+                }
+            });
+
             app.MapBlazorHub();
-            app.MapFallbackToPage("/_Host");
+            app.MapFallbackToPage("/404notfound");
 
             app.Run();
         }
