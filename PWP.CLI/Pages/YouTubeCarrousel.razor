@@ -1,0 +1,67 @@
+﻿<h3>YouTube Video Carousel</h3>
+
+@if (videos == null)
+{
+    <p>Loading...</p>
+}
+else if (videos.Any())
+{
+    <div class="video-carousel">
+        @foreach (var video in videos)
+        {
+            <div class="video-item">
+                <iframe width="360" height="200"
+                        src="https://www.youtube.com/embed/@video.VideoId"
+                        frameborder="0" allowfullscreen></iframe>
+                <p>@video.Title</p>
+                <p><small>Published on: @video.PublishedAt</small></p>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No videos found.</p>
+}
+
+@code {
+    private List<YouTubeVideo> videos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        videos = await GetLatestVideosAsync();
+    }
+
+    private async Task<List<YouTubeVideo>> GetLatestVideosAsync()
+    {
+        var apiKey = "AIzaSyDSHSJLvlcayYBcQfFllUepxk5HNEMl2Ws";
+        var channelId = "UCDDXY90tCmbU57J8J4-_T1w";
+
+        var youtubeService = new Google.Apis.YouTube.v3.YouTubeService(new Google.Apis.Services.BaseClientService.Initializer()
+            {
+                ApiKey = apiKey,
+                ApplicationName = "YouTubeAPIExample"
+            });
+
+        var searchListRequest = youtubeService.Search.List("snippet");
+        searchListRequest.ChannelId = channelId;
+        searchListRequest.MaxResults = 3;
+        searchListRequest.Order = Google.Apis.YouTube.v3.SearchResource.ListRequest.OrderEnum.Date;
+
+        var searchListResponse = await searchListRequest.ExecuteAsync();
+
+        return searchListResponse.Items.Select(item => new YouTubeVideo
+            {
+                Title = item.Snippet.Title,
+                VideoId = item.Id.VideoId,
+                PublishedAt = item.Snippet.PublishedAt.ToString()
+            }).ToList();
+    }
+
+    public class YouTubeVideo
+    {
+        public string Title { get; set; }
+        public string VideoId { get; set; }
+        public string PublishedAt { get; set; }
+    }
+}
