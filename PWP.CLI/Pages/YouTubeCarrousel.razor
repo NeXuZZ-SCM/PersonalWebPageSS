@@ -2,10 +2,9 @@
 
 @if (videos == null)
 {
-    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    <MudProgressLinear Color="Color.Primary" Size="Size.Medium" Value="50" Indeterminate="true" Class="my-7" />
 
-@*     <p>Loading...</p>
- *@}
+}
 else if (videos.Any())
 {
 <div class="video-carousel" style="display: flex; justify-content: space-around;">
@@ -16,7 +15,7 @@ else if (videos.Any())
                         src="@($"https://www.youtube.com/embed/{video.VideoId}")"
                         frameborder="0" allowfullscreen></iframe>
             @* <p>@video.Title</p> *@
-            <p><small>Published on: @video.FormattedDate</small></p>
+            <p><small>Publicado el @video.FormattedDate</small></p>
         </div>
     }
 </div>
