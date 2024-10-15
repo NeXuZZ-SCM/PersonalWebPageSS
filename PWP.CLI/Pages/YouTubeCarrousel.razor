@@ -2,22 +2,24 @@
 
 @if (videos == null)
 {
-    <p>Loading...</p>
-}
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+
+@*     <p>Loading...</p>
+ *@}
 else if (videos.Any())
 {
-    <div class="video-carousel">
-        @foreach (var video in videos)
-        {
-            <div class="video-item">
-                <iframe width="360" height="200"
-                        src="https://www.youtube.com/embed/@video.VideoId"
+<div class="video-carousel" style="display: flex; justify-content: space-around;">
+    @foreach (var video in videos)
+    {
+        <div class="video-item" style="flex: 1; margin: 10px;">
+                <iframe width="300" height="169"
+                        src="@($"https://www.youtube.com/embed/{video.VideoId}")"
                         frameborder="0" allowfullscreen></iframe>
-                <p>@video.Title</p>
-                <p><small>Published on: @video.PublishedAt</small></p>
-            </div>
-        }
-    </div>
+            @* <p>@video.Title</p> *@
+            <p><small>Published on: @video.FormattedDate</small></p>
+        </div>
+    }
+</div>
 }
 else
 {
@@ -52,7 +54,7 @@ else
 
         return searchListResponse.Items.Select(item => new YouTubeVideo
             {
-                Title = item.Snippet.Title,
+                // Title = item.Snippet.Title,
                 VideoId = item.Id.VideoId,
                 PublishedAt = item.Snippet.PublishedAt.ToString()
             }).ToList();
@@ -60,8 +62,10 @@ else
 
     public class YouTubeVideo
     {
-        public string Title { get; set; }
+        // public string Title { get; set; }
         public string VideoId { get; set; }
         public string PublishedAt { get; set; }
+
+        public string FormattedDate => DateTime.Parse(PublishedAt).ToString("dd-MM-yyyy");
     }
 }
